@@ -93,7 +93,7 @@
 		}*/
 
 		$.plot($("#chart1"), [dataset],{
-                serials:{shadowSize:0;},
+                series:{shadowSize:0},
                 xaxis: {show: false}
                 });
 	});
