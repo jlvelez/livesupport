@@ -12,45 +12,26 @@
   $(document).ready(function () {
 
 //*******************************   Control de Salidas Digitales  *************************************
-  	var btnState = [0, 0, 0, 0, 0];
+  	var btnState = [false,false];
     
-    $( "#analog1-text" ).text("La data analogica aparecera aqui xD");
+  	$('#btn-out-1, #btn-out-2').click( function(){
 
-  	$('#btn-out-1, #btn-out-2, #btn-out-3, #btn-out-4, #btn-out-5').click( function(){
-
-  		if( this.id == "btn-out-1" ){
-
-  			$('.led-1').toggleClass("led-green");
-  			btnState[0] = 1 - btnState[0];
+                switch (this.id){
+                      case "btn-out-1":
+             		$('.led-1').toggleClass("led-green");
+  			btnState[0] = !(btnState[0]);
   			console.log( setMessage(btnState[0],0));
-  			sendData( setMessage( btnState[0], 0) );
-
-  		}else if( this.id == "btn-out-2" ){
-
-  			$('.led-2').toggleClass("led-green");
-  			btnState[1] = 1 - btnState[1];
+  			sendData( StopStream );
+                        break;
+                      case "btn-out-2":
+                        $('.led-2').toggleClass("led-green");
+  			btnState[1] = !(btnState[1]);
 			console.log( setMessage(btnState[1],1));
-			sendData( setMessage( btnState[1], 1) );
-  		}else if ( this.id == "btn-out-3" ){
-
-  			$('.led-3').toggleClass("led-green");
-  			btnState[2] = 1 - btnState[2];
-  			console.log( setMessage( btnState[2], 2));
-  			sendData( setMessage( btnState[2], 2) );
-  		}else if ( this.id == "btn-out-4" ){
-
-  			$('.led-4').toggleClass("led-green");
-  			btnState[3] = 1 - btnState[3];
-  			console.log( setMessage( btnState[3], 3));
-  			sendData( setMessage( btnState[3], 3) );
-  		}else if ( this.id == "btn-out-5" ){
-
-  			$('.led-5').toggleClass("led-green");
-  			btnState[4] = 1 - btnState[4];
-  			console.log( setMessage( btnState[4], 4));
-  			sendData( setMessage( btnState[4], 4) );
-  		}
-
+			sendData( "StartStream" );
+                        break;
+                      default;
+                        break;
+                }
   	});
 
   //****************************   Control Entradas Analogicas   ***************************************
@@ -69,17 +50,6 @@
         sendData(msg);
     })
   });
-
-
-function setMessage(btnState, index){
-	var message = 0;
-	if(btnState == 1){
-		message = "Salida"+(index+1)+"-ON";
-	}else{
-		message = "Salida"+(index+1)+"-OFF";
-	}
-	return message;
-}
 
 
 // ********************      Funciones Socket.io     ******************************	 
@@ -114,7 +84,6 @@ function setMessage(btnState, index){
 			dataset.push(dat);
 		}
 
-		$( "#analog1-text" ).text(data).css("color","blue");
 		$.plot($("#chart1"), [dataset]);
 	});
 
