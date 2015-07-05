@@ -119,7 +119,7 @@ function receivedDataHandler(data){
        break;
     case "An":
        analogPacket = content.split(":");
-       analogData = timestamp + ":" + analogPacket[1]
+       analogData = Math.floor(Date.now() / 1000) + ":" + analogPacket[1]
        console.log(analogData);
        //io.emit("message",analogData);
        break;
