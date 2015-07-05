@@ -1,12 +1,14 @@
+/*******************************
+ Arduino Code for Livesupport Project 
+ Event : AngelHack SPS
+ Date :  July 4th, 2015
+ Written By: LiveSupport Team
+ ********************************/
 int data   = 0;
-int estado = 0;
-int pos    = 0;
-
-int sensor1 = 0;
-int sensor2 = 0;
 int Loplus = 5;
 int Lominus = 6;
-int EstadoEntradasAnalogicas[] = {0,0,0,0,0,0};
+int EstadoEntradaAnalogica= 0;
+int valorLeido = 0;
 
 void setup() {
    // Inicializa la comunicacion serial.
@@ -24,20 +26,19 @@ void loop() {
    switch(data){
  
    case 1: //Start Stream            
-            EstadoEntradasAnalogicas[0] = 1;
+            EstadoEntradaAnalogica = 1;
             break;
    case 2: //Stop Stream             
-            EstadoEntradasAnalogicas[0] = 0;
+            EstadoEntradaAnalogica = 0;
             break;
    default:
            
            break;
    }  
   }
-  if( EstadoEntradasAnalogicas[0] == 1 ){
+  if( EstadoEntradaAnalogica == 1 ){
     lecturaAnalogica(0);
   }
-  
 }
 
 void lecturaAnalogica(int pinAnalogico ){
@@ -47,12 +48,15 @@ void lecturaAnalogica(int pinAnalogico ){
   }
   else{
     // send the value of analog input 0:
-    int valorLeido = analogRead(pinAnalogico);
-      Serial.println(valorLeido);
-      Serial.print("An/Entrada Analogica ");
-      Serial.print(pinAnalogico);
-      Serial.print(":");                 // Caracter Delimitador
-      Serial.println(valorLeido);
+      for(int i= 0; i < 300 ; i++)
+      {
+        valorLeido = analogRead(pinAnalogico);
+        Serial.print("An/Entrada Analogica ");
+        Serial.print(pinAnalogico);
+        Serial.print(":");                 // Caracter Delimitador
+        Serial.println(valorLeido);
+      }
+      Serial.println("End");
   }
    delay(1);
 }
@@ -60,4 +64,5 @@ void lecturaAnalogica(int pinAnalogico ){
 /*  debo hacer que la data salga en formato json  asi como se muestra en el ejemplo siguiente: 
     var x = [{timestamp: valor, value:valor},{timestamp: valor, value:valor}];
 */
+
 
