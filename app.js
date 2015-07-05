@@ -105,7 +105,7 @@ function sendDataHandler(data){
         }
 }
 
-function receiveDataHandler(data){
+function receivedDataHandler(data){
  console.log(data);
  var packet       = data.split("/");
  var header       = packet[0];
@@ -119,9 +119,9 @@ function receiveDataHandler(data){
        break;
     case "An":
        analogPacket = content.split(":");
-       analogData   = analogPacket[1];
+       analogData = timestamp + ":" + analogPacket[1]
        console.log(analogData);
-       io.emit("message",analogData);
+       //io.emit("message",analogData);
        break;
     default:
        break;

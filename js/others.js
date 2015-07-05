@@ -21,7 +21,7 @@
              		$('.led-1').toggleClass("led-green");
   			btnState[0] = !(btnState[0]);
   			console.log( setMessage(btnState[0],0));
-  			sendData( StopStream );
+  			sendData( "StopStream" );
                         break;
                       case "btn-out-2":
                         $('.led-2').toggleClass("led-green");
@@ -37,7 +37,7 @@
   //****************************   Control Entradas Analogicas   ***************************************
   $(function() {
     $('#analog1-enable').change(function() {
-    	var msg = "Entrada-Analogica1-"+ $(this).prop("checked");
+    	var msg = "StopStream";
     	console.log(msg );
         sendData(msg);
     })
