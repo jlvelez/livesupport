@@ -17,7 +17,7 @@ process.setMaxListeners( 0 );               // Thanks Richard Siwady for this aw
 // send the index page if you get a request for / :
 app.get('/', sendIndex);
 
-app.use(express.static(__dirname + '/frontend'));
+app.use(express.static(__dirname + '/website'));
 
 
 var serialport = require("serialport"),     // include the serialport library
@@ -61,7 +61,7 @@ function serialError(error) {
 }
 
 function fromArduino(data){
-    receiveDataHandler(data);
+    receivedDataHandler(data);
 }
 
 function SendtoArduino(data){
@@ -72,7 +72,7 @@ function SendtoArduino(data){
 
 // callback function for 'get /' requests:
 function sendIndex(request, response){
-    response.sendFile(__dirname + '/frontend/index.html');
+    response.sendFile(__dirname + '/website/index.html');
 }
 
 
@@ -95,13 +95,11 @@ io.on('connection', function(socket){
 function sendDataHandler(data){
         switch (data){
 	    case "StopStream":
-              return '1';
+              return '2';
             case "StartStream":
-              return '2':
-              break;
+               return '1';
             default:
               return '0';
-              break;
         }
 }
 
@@ -113,31 +111,22 @@ function receivedDataHandler(data){
  var analogPacket = 0;
  var analogData   = 0;
 
- switch(header){
-    case "dig":
-       console.log(content);
-       break;
+ switch(header)
+  {
+    case "dig": console.log(content); break;
     case "An":
-       analogPacket = content.split(":");
-       analogData = Math.floor(Date.now() / 1000) + ":" + analogPacket[1]
+      analogPacket = content.split(":");
+      //var timestamp = Math.floor( Date.now() / 1000);
+      // analogData =  timestamp+ ":" + analogPacket[1];
+       analogData = analogPacket[1];
        console.log(analogData);
-       //io.emit("message",analogData);
+       io.emit("message",analogData);
        break;
     default:
        break;
- }
+  }
     
  }
- /*
-  if( ){io
-
-  }
-  
-  var res = data.split(":");
-  console.log(res)
-  console.log("valorLeido:"+res[1]);
-*/
-}
 
 
 /*  NOTA:  Esta funcion, trabaja al 100%  la comente para terner un referencia, en caso 
@@ -158,8 +147,8 @@ io.on('connection', function(socket){
 */
 
 // listen for incoming server messages:
-http.listen(8081,'0.0.0.0', function(){
-  console.log('listening on port 5080');
+http.listen(8082,'0.0.0.0', function(){
+  console.log('listening on port 8082');
 });
 
 /* listen for incoming server messages:
