@@ -61,6 +61,7 @@ void lecturaAnalogica(int pinAnalogico ){
       Serial.print(":");
       Serial.println("End");  
     }
+   delay(1);
 }
 
 /*  debo hacer que la data salga en formato json  asi como se muestra en el ejemplo siguiente: 

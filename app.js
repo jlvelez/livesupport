@@ -110,17 +110,25 @@ function receivedDataHandler(data){
  var content      = packet[1];
  var analogPacket = 0;
  var analogData   = 0;
-
+ var dataArray = [];
+ var index  = 0;
  switch(header)
   {
     case "dig": console.log(content); break;
     case "An":
-      analogPacket = content.split(":");
+      
+      while(analogData !="End"){
+        
+        analogPacket = content.split(":");
       //var timestamp = Math.floor( Date.now() / 1000);
       // analogData =  timestamp+ ":" + analogPacket[1];
        analogData = analogPacket[1];
+       dataArray[index] = analogData;
        console.log(analogData);
-       io.emit("message",analogData);
+       index = index++;
+       console.log("indexValue: "+ index);
+      }
+        io.emit("message",dataArray);
        break;
     default:
        break;
