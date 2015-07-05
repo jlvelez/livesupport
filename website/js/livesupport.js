@@ -70,9 +70,10 @@
 		 
      console.log("counter es:"+counter);
       console.log("dataset length es:"+ dataset.length);
-       counter += 1;
-      dat =[counter,data];
-      dataset.push(dat);
+      for(var counter =0 ; counter < data.length; counter++){
+            dat =[Math.floor(Date.Now())/1000,data];
+            dataset.push(dat);
+      }
 		 //array = [[0, data], [1, data],[2,data],[3,data]];
 		/*if( dataset.length > 120 ){ 
 			dataset.shift(); 
