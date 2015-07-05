@@ -12,8 +12,8 @@
   $(document).ready(function () {
 
 //*******************************   Control de Salidas Digitales  *************************************
-  
-    
+
+
   	$('#btn-start, #btn-stop').click( function(){
 
       switch (this.id){
@@ -50,10 +50,10 @@
   });
 */
 
-// ********************      Funciones Socket.io     ******************************	 
+// ********************      Funciones Socket.io     ******************************
 
   var socket = io();		// socket.io instance
-  
+  var dat = [];
 
    // this function sends data to the server. It's called when
    // the submit button is pressed:
@@ -63,23 +63,25 @@
 	}
 
 	var counter = 0;
-	var dat = [];
 	var dataset = [];
 
 	// if the server sends you data, act on it:
 	socket.on('message', function(data) {
 		 console.log(data);
-		 
+
      console.log("counter es:"+counter);
       console.log("dataset length es:"+ dataset.length);
+      if (dat.length >=300){
+        dat.splice(1);
+      }
       for(var counter =0 ; counter <= dat.length; counter++){
             dat =[Math.floor(Date.now())/1000,data];
             console.log("El valor de dat: "+dat);
             dataset.push(dat);
       }
 		 //array = [[0, data], [1, data],[2,data],[3,data]];
-		/*if( dataset.length > 120 ){ 
-			dataset.shift(); 
+		/*if( dataset.length > 120 ){
+			dataset.shift();
 			counter =0;
 			dataset = [];
 		}
