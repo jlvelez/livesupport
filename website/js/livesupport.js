@@ -65,6 +65,9 @@
 	var counter = 0;
 	
 	var dataset = [];
+        if(dat.length > 300){
+            dat.slice(1);
+        }
 	// if the server sends you data, act on it:
 	socket.on('message', function(data) {
 		 console.log(data);
