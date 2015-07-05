@@ -7,11 +7,11 @@ int sensor2 = 0;
 int Loplus = 5;
 int Lominus = 6;
 int EstadoEntradasAnalogicas[] = {0,0,0,0,0,0};
-int wait= 10;
+int wait= 100;
 int x = 0;
 void setup() {
    // Inicializa la comunicacion serial.
-  Serial.begin(9600);    
+  Serial.begin(57600);    
  pinMode(Loplus, INPUT);
  pinMode(Lominus, INPUT); 
 }
@@ -39,7 +39,6 @@ void loop() {
     lecturaAnalogica(0);
   }
   delay(wait);
- // delayMicroseconds(wait);   
 }
 
 void lecturaAnalogica(int pinAnalogico ){
@@ -47,17 +46,16 @@ void lecturaAnalogica(int pinAnalogico ){
    if((digitalRead(Loplus) == 1)||(digitalRead(Lominus) == 1)){
     Serial.println('!');
   }
-  else{ 
+  else{
     // send the value of analog input 0:
-      int valorLeido = analogRead(pinAnalogico);  
-      valorLeido = map(valorLeido, 0, 1023, 10, 512);
-    
+    int valorLeido = analogRead(pinAnalogico);
       Serial.println(valorLeido);
       Serial.print("An/Entrada Analogica ");
       Serial.print(pinAnalogico);
       Serial.print(":");                 // Caracter Delimitador
       Serial.println(valorLeido);
   }
+   delay(1);
 }
 
 /*  debo hacer que la data salga en formato json  asi como se muestra en el ejemplo siguiente: 

@@ -1,18 +1,9 @@
-/*
-    Socket.io example
-
-    Shows how to make a basic webSocket connection between a client and a server
-    using Socket.io version 1.0 or later (http://socket.io/)
-
-    created 11 June 2015
-    by Miklos Szabo
-*/
 
 var express = require('express');           // include express.js
 var app = express();                        // make an instance of express.js
 var http = require('http').Server(app);     // include http and make a server instance with the express instance
 var io = require('socket.io')(http);        // include socket.io and make a socket server instance with the http instance
-process.setMaxListeners( 0 );               // Thanks Richard Siwady for this awesome solution for eventListener bug.
+process.setMaxListeners( 0 );               
 
 // send the index page if you get a request for / :
 app.get('/', sendIndex);
@@ -26,7 +17,7 @@ var serialport = require("serialport"),     // include the serialport library
 
 // open the serial port. Uses the command line parameter:
 var myPort = new SerialPort(portName, { 
-    baudRate: 57600,
+    baudRate: 9600,
     // look for return and newline at the end of each data packet:
     parser: serialport.parsers.readline("\r\n") 
 });
@@ -93,8 +84,9 @@ io.on('connection', function(socket){
 });
 
 function sendDataHandler(data){
+        
         switch (data){
-	    case "StopStream":
+	          case "StopStream":
               return '2';
             case "StartStream":
                return '1';
@@ -131,31 +123,7 @@ function receivedDataHandler(data){
     
  }
 
-
-/*  NOTA:  Esta funcion, trabaja al 100%  la comente para terner un referencia, en caso 
-de que me pierda. 
-
-io.on('connection', function(socket){
-    console.log('a user connected');
-    console.log(socket.handshake.address);
-    
-    // send something to the web client with the data:
-    
-    socket.on('message', function(data) {
-
-        console.log('received from client: ' + data);
-
-    });
-});
-*/
-
 // listen for incoming server messages:
 http.listen(8082,'0.0.0.0', function(){
   console.log('listening on port 8082');
 });
-
-/* listen for incoming server messages:
-http.listen(8080, function(){
-  console.log('listening on port 5080');
-});
-*/

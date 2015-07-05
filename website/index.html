@@ -14,11 +14,7 @@
     <!-- Bootstrap Core CSS -->
     <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- MetisMenu CSS -->
-    <link href="../bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
-
-    <!-- Timeline CSS -->
-    <link href="../dist/css/timeline.css" rel="stylesheet">
+   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
     <!-- Custom CSS -->
     <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
@@ -57,42 +53,28 @@
 
         <div id="page-wrapper">
 
-            <div class="row">
-             
-             <button id="btn-start" type="button" class="btn btn-lg btn-success">Start</button>
-             <button id="btn-stop" type="button" class="btn btn-lg btn-success">Stop</button>
-            </div>
-            <div class="row">
+            <div class="row container-fluid">
                 <div>
                     <h1 class="page-header">Live Support</h1>
                 </div>
             </div>
             <!-- /.row -->
-            <div class="  row">
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-comments fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">Jorge Velez</div>
 
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="pull-left">Informacion Adicional</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
+            <div class="row container-fluid">
+                <div class="col-md-6">
+                 <button id="btn-start" type="button" class="btn btn-lg btn-success">Start</button>
+                 <button id="btn-stop" type="button" class="btn btn-lg btn-success">Stop</button>
+                </div>
+                <div class="col-md-6">
+                    <div class="container-fluid" style="padding:10px;">
+                        <div id="slider-samples"></div>
+                        <input type="text" id="value-samples" readonly style="border:0; color:#f6931f; font-weight:bold;">     
+                    </div>
+                    <div class="container-fluid" style="padding:10px;">
+                        <p>Time between updates: 
+                          <input id="updateInterval" type="text" value="" style="text-align: right; width:5em">milliseconds</p>  
                     </div>
                 </div>
-
-
             </div>
             <!-- /.row -->
             <div class="row">
@@ -122,7 +104,7 @@
                         </div>
                         <!-- /.panel-heading --> 
                         <div class="panel-body">
-                              <div id="chart1" style="width:800px;height:400px;"></div>
+                              <div id="chart1" style="width:1300px;height:400px;"></div>
                         </div>
                         <!-- /.panel-body -->
                     </div>
@@ -157,6 +139,9 @@
     <!-- Custom Theme JavaScript -->
     <script src="/dist/js/sb-admin-2.js"></script>
     <script src="/js/jquery.flot.js"></script>
+
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
 <!-- jQuery -->
 		<!-- Socket.io-client Javascript -->

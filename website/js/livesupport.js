@@ -1,20 +1,33 @@
-  /*
-    Socket.io example
-
-    Shows how to make a basic webSocket connection between a client and a server
-    using Socket.io version 1.0 or later (http://socket.io/)
-
-    created 11 June 2015
-    by Miklos Szabo
-*/
-
+var MAXDATA = 170;
+var counter = 0;
+var dataset = [];
+var dat;
+function setMaxdata(length){
+ MAXDATA = length;
+}
 
   $(document).ready(function () {
 
-//*******************************   Control de Salidas Digitales  *************************************
 
+    $( "#slider-samples" ).slider({
+      range: "max",
+      min: 60,
+      max: 121,
+      value: 60,
+      slide: function( event, ui ) {
+        //var len =   .val( ui.value );
+        var value = $( "#slider-samples" ).slider( "option", "value" );
+        console.log(value);
+        //sendData("Setsamples");
+        setMaxdata(value);
+       
+        console.log("valor de MAXDATA: "+ MAXDATA);
+      }
+    });
 
-  	$('#btn-start, #btn-stop').click( function(){
+       
+
+    $('#btn-start, #btn-stop').click( function(){
 
       switch (this.id){
         case "btn-stop":
@@ -25,35 +38,14 @@
         case "btn-start":
         console.log("StartStream" );
         sendData( "StartStream" );
+        dataset = [];
         break;
         default:
         break;
       }
   	});
 
-  //****************************   Control Entradas Analogicas   ***************************************
- /*
-  $(function() {
-    $('#analog1-enable').change(function() {
-    	var msg = "StopStream";
-    	console.log(msg );
-        sendData(msg);
-    })
-  });
-
-  $(function() {
-    $('#analog2-enable').change(function() {
-    	var msg = "Entrada-Analogica1-"+ $(this).prop("checked");
-    	console.log(msg );
-        sendData(msg);
-    })
-  });
-*/
-
-// ********************      Funciones Socket.io     ******************************
-
   var socket = io();		// socket.io instance
-  var dat = [];
 
    // this function sends data to the server. It's called when
    // the submit button is pressed:
@@ -62,40 +54,25 @@
 		socket.emit('message', data);
 	}
 
-	var counter = 0;
-	var dataset = [];
+
 
 	// if the server sends you data, act on it:
 	socket.on('message', function(data) {
-		 console.log(data);
+    dataset.push(dat);
+    dat =[Math.floor(Date.now())/1000,data];
 
-     console.log("counter es:"+counter);
-      console.log("dataset length es:"+ dataset.length);
-      if (dat.length >=300){
-        dat.splice(1);
-      }
-      for(var counter =0 ; counter <= dat.length; counter++){
-            dat =[Math.floor(Date.now())/1000,data];
-            console.log("El valor de dat: "+dat);
-            dataset.push(dat);
-      }
-		 //array = [[0, data], [1, data],[2,data],[3,data]];
-		/*if( dataset.length > 120 ){
-			dataset.shift();
-			counter =0;
-			dataset = [];
-		}
-		else{
-			console.log("counter es:"+counter);
-			console.log("dataset length es:"+ dataset.length);
-			 counter += 1;
-			dat =[counter,data];
-			dataset.push(dat);
-		}*/
-
-		$.plot($("#chart1"), [dataset],{
+    if( dataset.length > MAXDATA){
+       dataset.shift();
+       //sendData( "StopStream");
+       //console.log("Getting out");
+    }
+    
+  
+     $.plot($("#chart1"), [dataset],{
                 serials:{shadowSize:0}
+
                 });
+
 	});
 
   });
