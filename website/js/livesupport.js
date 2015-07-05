@@ -53,7 +53,7 @@
 // ********************      Funciones Socket.io     ******************************	 
 
   var socket = io();		// socket.io instance
-  
+  var dat = [];
 
    // this function sends data to the server. It's called when
    // the submit button is pressed:
@@ -63,9 +63,11 @@
 	}
 
 	var counter = 0;
-	var dat = [];
+	
 	var dataset = [];
-        
+        if(dat.length > 300){
+            dat.slice(1);
+        }
 	// if the server sends you data, act on it:
 	socket.on('message', function(data) {
 		 console.log(data);
@@ -92,7 +94,6 @@
 
 		$.plot($("#chart1"), [dataset],{
                 serials:{shadowSize:0;},
-                yaxis: {min:-500,max:500}
                 xaxis: {show: false}
                 });
 	});
