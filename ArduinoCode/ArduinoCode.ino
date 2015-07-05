@@ -39,7 +39,7 @@ void loop() {
   if( EstadoEntradaAnalogica == 1 ){
     lecturaAnalogica(0);
   }
-  delay(100);
+  //delay(100);
 }
 
 void lecturaAnalogica(int pinAnalogico ){

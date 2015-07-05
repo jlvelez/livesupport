@@ -116,19 +116,20 @@ function receivedDataHandler(data){
   {
     case "dig": console.log(content); break;
     case "An":
-      
-      while(analogData !="End"){
+      var i = 0;
+      for(i= 0; i <300 ; i++){
         
         analogPacket = content.split(":");
       //var timestamp = Math.floor( Date.now() / 1000);
       // analogData =  timestamp+ ":" + analogPacket[1];
        analogData = analogPacket[1];
-       dataArray[index] = analogData;
+       dataArray[i] = analogData;
        console.log(analogData);
-       index = index++;
-       console.log("indexValue: "+ index);
+       
+       console.log("indexValue: "+ i);
       }
-        io.emit("message",dataArray);
+      SendtoArduino(2); // stop stream;
+      //  io.emit("message",dataArray);
        break;
     default:
        break;
