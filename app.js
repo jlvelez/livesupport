@@ -115,6 +115,7 @@ function receivedDataHandler(data){
   {
     case "dig": console.log(content); break;
     case "An":
+      
       analogPacket = content.split(":");
       //var timestamp = Math.floor( Date.now() / 1000);
       // analogData =  timestamp+ ":" + analogPacket[1];
@@ -122,6 +123,8 @@ function receivedDataHandler(data){
        console.log(analogData);
        io.emit("message",analogData);
        break;
+    case "end":
+    break;   
     default:
        break;
   }

@@ -53,7 +53,7 @@
 // ********************      Funciones Socket.io     ******************************	 
 
   var socket = io();		// socket.io instance
-  var dat = [];
+  
 
    // this function sends data to the server. It's called when
    // the submit button is pressed:
@@ -63,19 +63,18 @@
 	}
 
 	var counter = 0;
-	
+	var dat = [];
 	var dataset = [];
-        if(dat.length > 300){
-            dat.slice(1);
-        }
+
 	// if the server sends you data, act on it:
 	socket.on('message', function(data) {
 		 console.log(data);
 		 
      console.log("counter es:"+counter);
       console.log("dataset length es:"+ dataset.length);
-      for(var counter =0 ; counter < dat.length; counter++){
-            dat =[Math.floor(Date.Now())/1000,data];
+      for(var counter =0 ; counter <= dat.length; counter++){
+            dat =[Math.floor(Date.now())/1000,data];
+            console.log("El valor de dat: "+dat);
             dataset.push(dat);
       }
 		 //array = [[0, data], [1, data],[2,data],[3,data]];
@@ -93,8 +92,7 @@
 		}*/
 
 		$.plot($("#chart1"), [dataset],{
-                serials:{shadowSize:0;},
-                xaxis: {show: false}
+                serials:{shadowSize:0}
                 });
 	});
 
